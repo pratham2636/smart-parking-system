@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #1d2671, #c33764);
+        height: 100vh;
+    }
+
+    .register-box {
+        max-width: 400px;
+        margin: auto;
+        margin-top: 8%;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+</style>
+
+<div class="register-box">
+
+    <h3 class="text-center mb-4">📝 Register</h3>
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+
+        <input type="text" name="name" placeholder="Name"
+               required minlength="3" class="form-control mb-3">
+
+        <input type="email" name="email" placeholder="Email"
+               required class="form-control mb-3">
+
+        <input type="password" name="password" placeholder="Password"
+               required minlength="4" class="form-control mb-3">
+
+        <button type="submit" class="btn btn-success w-100">
+            Register
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Parking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2 shadow">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">🚗 Smart Parking</a>
+
+        <ul class="navbar-nav ms-auto flex-row align-items-center">
+
+            {% if session.get('user_id') %}
+
+                <!-- 👇 PROFILE DROPDOWN -->
+                <li class="nav-item dropdown me-3">
+
+                    <a class="nav-link dropdown-toggle d-flex align-items-center"
+                       href="#" data-bs-toggle="dropdown">
+
+                        <span class="text-white fw-semibold">
+                            {{ session.get('user_name') }}
+                        </span>
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+                            <a class="dropdown-item" href="/profile">👤 Profile</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/my_bookings">📄 My Bookings</a>
+                        </li>
+
+                        {% if session.get('role') == 'admin' %}
+                        <li>
+                            <a class="dropdown-item text-warning" href="/admin">👑 Admin</a>
+                        </li>
+                        {% endif %}
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item text-danger" href="/logout">🚪 Logout</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- 👇 OPTIONAL (agar separate links rakhne ho) -->
+                <!--
+                <li class="nav-item me-3">
+                    <a class="nav-link" href="/parkings">Parkings</a>
+                </li>
+                -->
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #141e30, #243b55);
+        height: 100vh;
+        color: white;
+    }
+
+    .hero-box {
+        text-align: center;
+        margin-top: 10%;
+    }
+
+    .btn-custom {
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-weight: 500;
+    }
+</style>
+
+<div class="hero-box">
+
+    <h1 class="display-4 mb-3">🚗 Smart Parking System</h1>
+    <p class="lead mb-4">Book your parking slot easily & smartly</p>
+
+    <a href="/login" class="btn btn-primary btn-custom m-2">
+        Login
+    </a>
+
+    <br>
+
+    <a href="/admin_login" class="btn btn-warning btn-custom m-2 shadow">
+        👑 Admin Login
+    </a>
+
+</div>
+
+{% endblock %}

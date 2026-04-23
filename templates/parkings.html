@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .card {
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .badge-available {
+        background: #28a745;
+        padding: 5px 10px;
+        border-radius: 10px;
+    }
+
+    .badge-full {
+        background: #dc3545;
+        padding: 5px 10px;
+        border-radius: 10px;
+    }
+</style>
+
+<h2 class="mb-4">🚗 Available Parkings</h2>
+
+<div class="row">
+
+{% for p in data %}
+<div class="col-md-4">
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+
+            <h4 class="mb-2">{{ p.name }}</h4>
+            <p class="text-muted">{{ p.location }}</p>
+
+            <p>
+                <b>Status:</b>
+                {% if p.available_slots > 0 %}
+                    <span class="badge-available">Available ({{ p.available_slots }})</span>
+                {% else %}
+                    <span class="badge-full">Full</span>
+                {% endif %}
+            </p>
+
+            {% if p.available_slots > 0 %}
+                <a href="/book/{{ p.id }}" class="btn btn-primary w-100">
+                    Book Now
+                </a>
+            {% else %}
+                <button class="btn btn-secondary w-100" disabled>
+                    Not Available
+                </button>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

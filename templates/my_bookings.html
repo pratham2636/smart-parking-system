@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .status-active {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-expired {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<h2 class="mb-4">📄 My Bookings</h2>
+
+{% for b in data %}
+<div class="card p-3 mb-3 shadow">
+
+    <h4 class="mb-2">{{ b.name }}</h4>
+
+    <p><strong>Slot:</strong> {{ b.slot_no }}</p>
+
+    <p>
+        <strong>Time:</strong><br>
+        {{ b.start_time }} → {{ b.end_time }}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        {% if b.status == 'active' %}
+            <span class="status-active">Active</span>
+        {% else %}
+            <span class="status-expired">Expired</span>
+        {% endif %}
+    </p>
+
+    <p><strong>Amount:</strong> ₹{{ b.amount_paid }}</p>
+
+</div>
+{% endfor %}
+
+<a href="/parkings" class="btn btn-dark mt-2">Back</a>
+
+<!-- ALERT SYSTEM -->
+<script>
+{% for b in data %}
+
+(function() {
+    let bookingId = "{{ b.id }}";
+    let endTime = new Date("{{ b.end_time }}").getTime();
+    let now = new Date().getTime();
+
+    if (endTime <= now) {
+        if (!localStorage.getItem("expired_" + bookingId)) {
+            alert("❌ Your parking time has expired!");
+            localStorage.setItem("expired_" + bookingId, "true");
+        }
+        return;
+    }
+
+    let warningShown = false;
+
+    setInterval(function() {
+        let current = new Date().getTime();
+        let timeLeft = endTime - current;
+
+        if (!warningShown && timeLeft > 0 && timeLeft <= 60000) {
+            alert("⏰ Your parking time is about to expire!");
+            warningShown = true;
+        }
+
+        if (timeLeft <= 0) {
+            if (!localStorage.getItem("expired_" + bookingId)) {
+                alert("❌ Your parking time has expired!");
+                localStorage.setItem("expired_" + bookingId, "true");
+            }
+        }
+
+    }, 5000);
+
+})();
+{% endfor %}
+</script>
+
+{% endblock %}
